@@ -24,17 +24,6 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ObjectSizeFetcher</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-<!--        <dependency>
-            <groupId>com.github.jbellis</groupId>
-            <artifactId>jamm</artifactId>
-            <version>0.3.3-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>-->
-        <dependency>
             <groupId>com.github.jbellis</groupId>
             <artifactId>jamm</artifactId>
             <version>0.3.2</version>
@@ -52,4 +41,49 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <distributionManagement>
+        <repository>
+            <id>maven-s3-release-repo</id>
+            <name>AWS Release Repository</name>
+            <url>s3://repo.ustocktrade.com/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-s3-snapshot-repo</id>
+            <name>AWS Snapshot Repository</name>
+            <url>s3://repo.ustocktrade.com/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>libs-release</name>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>maven-s3-release-repo</id>
+            <name>libs-release</name>
+            <url>s3://repo.ustocktrade.com/releases</url>
+        </repository>
+        <repository>
+            <snapshots/>
+            <id>maven-s3-snapshot-repo</id>
+            <name>libs-snapshot</name>
+            <url>s3://repo.ustocktrade.com/snapshots</url>
+        </repository>
+    </repositories>
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.springframework.build</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>5.0.0.RELEASE</version>
+            </extension>
+        </extensions>
+    </build>
 </project>

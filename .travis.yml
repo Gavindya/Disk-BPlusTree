@@ -7,5 +7,13 @@ services:
   
 before_install:
   - mvn versions:set versions:commit -DnewVersion="1.0"
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
   - echo "<settings><servers><server><id>maven-s3-release-repo</id><username>\${env.ARTIFACTS_KEY}</username><password>\${env.ARTIFACTS_SECRET}</password></server><server><id>maven-s3-snapshot-repo</id><username>\${env.ARTIFACTS_KEY}</username><password>\${env.ARTIFACTS_SECRET}</password></server></servers></settings>" > $HOME/.m2/settings.xml
   - echo $JAVA_HOME
+  
+install: "mvn clean jacoco:prepare-agent install jacoco:report"
+  
+after_success:
+  - chmod 777 scripts/*
+  - ./scripts/upload-coverage.sh

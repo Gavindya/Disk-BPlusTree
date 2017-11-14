@@ -1,2 +1,21 @@
 language: java
+jdk:
+  - oraclejdk8
+  
+services:
+  - docker
+  
+before_install:
+  - mvn versions:set versions:commit -DnewVersion="1.0"
+  - echo "<settings><servers><server><id>maven-s3-release-repo</id><username>\${env.ARTIFACTS_KEY}</username><password>\${env.ARTIFACTS_SECRET}</password></server><server><id>maven-s3-snapshot-repo</id><username>\${env.ARTIFACTS_KEY}</username><password>\${env.ARTIFACTS_SECRET}</password></server></servers></settings>" > $HOME/.m2/settings.xml
+  - echo $JAVA_HOME
 
+after_success:
+  - mvn deploy --settings $HOME/.m2/settings.xml
+  
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: bash ./scripts/docker_deploy.sh
+  on:
+    branch: master

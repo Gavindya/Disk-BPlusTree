@@ -9,56 +9,56 @@ package com.ustack.diskbplustree.tree;
  *
  * @author AdminPC
  */
-public class InternalNodeEntity extends NodeEntity{
+public class InternalNodeEntity extends NodeEntity {
 
-    private long leftNodeOffset;
-    private long rightNodeOffset;
+  private int leftNodeOffset;
+  private int rightNodeOffset;
 
-    public InternalNodeEntity(Integer key, Tree tree) {
-        super(key, tree);
-        leftNodeOffset = (-1);
-        rightNodeOffset = (-1);
-    }
+  public InternalNodeEntity(Long key, Tree tree) {
+    super(key, tree);
+    leftNodeOffset = (-1);
+    rightNodeOffset = (-1);
+  }
 
-    public void setLeftNode(long nodeLocation) {
-        leftNodeOffset = nodeLocation;
-    }
+  public void setLeftNode(int nodeLocation) {
+    leftNodeOffset = nodeLocation;
+  }
 
-    public void setRightNode(long nodeLocation) {
-        rightNodeOffset = nodeLocation;
-    }
+  public void setRightNode(int nodeLocation) {
+    rightNodeOffset = nodeLocation;
+  }
 
-    public long getLeftNodeOffset() {
-        return leftNodeOffset;
-    }
+  public int getLeftNodeOffset() {
+    return leftNodeOffset;
+  }
 
-    public long getRightNodeOffset() {
-        return rightNodeOffset;
-    }
+  public int getRightNodeOffset() {
+    return rightNodeOffset;
+  }
 
-    public Node getLeftNode(Tree tree) {
-        if (leftNodeOffset != (-1)) {
-            Node node= tree.getInMemoryNodes().getNode(leftNodeOffset);
+  public Node getLeftNode(Tree tree) {
+    if (leftNodeOffset != (-1)) {
+      Node node = tree.getInMemoryNodes().getNode(leftNodeOffset, tree);
 //            System.out.println("left node - "+node.toString());
-            return node;
-        } else {
-            return null;
-        }
+      return node;
+    } else {
+      return null;
     }
+  }
 
-    public Node getRightNode(Tree tree) {
-        if (rightNodeOffset != (-1)) {
-            Node node= tree.getInMemoryNodes().getNode(rightNodeOffset);
+  public Node getRightNode(Tree tree) {
+    if (rightNodeOffset != (-1)) {
+      Node node = tree.getInMemoryNodes().getNode(rightNodeOffset, tree);
 //            System.out.println("right node - "+node.toString());
-            return node;
-        } else {
-            return null;
-        }
+      return node;
+    } else {
+      return null;
     }
+  }
 
-    @Override
-    public String toString() {
-        return getKey().toString();
-    }
+  @Override
+  public String toString() {
+    return getKey().toString();
+  }
 
 }

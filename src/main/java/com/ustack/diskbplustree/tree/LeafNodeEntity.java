@@ -15,14 +15,15 @@ import java.util.ArrayList;
  */
 public class LeafNodeEntity extends NodeEntity {
 
-    private final ArrayList<Long> offset;
+  private ArrayList<Long> offset;
+  private long longOffset;
 
-    public LeafNodeEntity(Integer key, Tree tree) {
-        super(key, tree);
-        offset = new ArrayList<>();
-    }
+  public LeafNodeEntity(Long key, Tree tree) {
+    super(key, tree);
+    offset = new ArrayList<>();
+  }
 
-    private void writeValue(Object data) {
+  private void writeValue(Object data) {
 //        try {
 //            String filePath = ConstantsOfTree.DB_FILE_PATH;/*tree.getDbFilePath();*/
 //            File file = new File(filePath);
@@ -47,26 +48,26 @@ public class LeafNodeEntity extends NodeEntity {
 //        } catch (Exception ex) {
 //            ex.printStackTrace();
 //        }
-    }
+  }
 
-    public void setValue(Object data) {
-        writeValue(data);
-    }
+  public void setValue(Object data) {
+    writeValue(data);
+  }
 
-    private String valueFound(long index, String filePath) {
-        try (RandomAccessFile randomAccessFile = new RandomAccessFile(new File(filePath), "r")) {
-            randomAccessFile.seek(index);
-            StringBuilder stringBuilder = new StringBuilder();
-            int character = randomAccessFile.read();
-            while ((character != -1) && (character != 0x1e)) {
-                stringBuilder.append((char) character);
-                character = randomAccessFile.read();
-            }
-            return stringBuilder.toString();
-        } catch (Exception ex) {
-            return "";
-        }
+  private String valueFound(long index, String filePath) {
+    try (RandomAccessFile randomAccessFile = new RandomAccessFile(new File(filePath), "r")) {
+      randomAccessFile.seek(index);
+      StringBuilder stringBuilder = new StringBuilder();
+      int character = randomAccessFile.read();
+      while ((character != -1) && (character != 0x1e)) {
+        stringBuilder.append((char) character);
+        character = randomAccessFile.read();
+      }
+      return stringBuilder.toString();
+    } catch (Exception ex) {
+      return "";
     }
+  }
 
 //    private void printOffsets() {
 //        System.out.print("offsets = ");
@@ -75,13 +76,17 @@ public class LeafNodeEntity extends NodeEntity {
 //        }
 //        System.out.println();
 //    }
+  public void setDataOffset(long offset) {
+    this.longOffset = offset;
+  }
 
-    public long getOffset(){
-        return 5l;
-    }
-    public long getValue() {
-        //return offset of DB file
-        return 5l;
+  public long getOffset() {
+    return 5l;
+  }
+
+  public long getValue() {
+    //return offset of DB file
+    return 5l;
 //        try {
 //            String filePath = ConstantsOfTree.DB_FILE_PATH;/*tree.getDbFilePath();*/
 //            File file = new File(filePath);
@@ -107,6 +112,6 @@ public class LeafNodeEntity extends NodeEntity {
 //            log.exception(exception, "exception - ", exception.getMessage());
 //            return null;
 //        }
-    }
+  }
 
 }

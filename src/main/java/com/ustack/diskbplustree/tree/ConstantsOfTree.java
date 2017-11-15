@@ -11,19 +11,19 @@ package com.ustack.diskbplustree.tree;
  */
 public class ConstantsOfTree {
 
-    public static long MEMORY_LIMIT_NODES = 5;
-    public static String DB_PATH = "C:\\Users\\AdminPC\\Documents\\gavindya\\bpTree\\bpTree\\dbPath";
-    public static int DEGREE = 5;
-    public static String TREE_PATH = "C:\\Users\\AdminPC\\Documents\\gavindya\\bpTree\\bpTree\\dbPath\\tree.ser";
-    public static String DB_FILE_PATH = "C:\\Users\\AdminPC\\Documents\\gavindya\\bpTree\\bpTree\\dbPath\\db.txt";
-    public static String NODE_FILE_PATH = "C:\\Users\\AdminPC\\Documents\\gavindya\\bpTree\\bpTree\\dbPath\\nodes.txt";
+//    public static long MEMORY_LIMIT_NODES = 5;
+  public static String DB_PATH = "C:\\Users\\AdminPC\\Documents\\gavindya\\bpTree\\db";
+  public static int DEGREE = 254;
+  public static String TREE_PATH = DB_PATH + "\\tree.ser";
+  public static String DB_FILE_PATH = DB_PATH + "\\db.txt";
+  public static String NODE_FILE_PATH = DB_PATH + "\\nodes.txt";
 
-    public static int getSplitLocation() {
-        if (DEGREE % 2 == 0) {
-            return DEGREE / 2;
-        } else {
-            return ((DEGREE - 1) / 2);
-        }
+  public static int getSplitLocation() {
+    if (DEGREE % 2 == 0) {
+      return DEGREE / 2;
+    } else {
+      return ((DEGREE - 1) / 2);
     }
+  }
 
 }

@@ -5,7 +5,6 @@
  */
 package com.ustack.diskbplustree.helpers;
 
-
 import com.ustack.diskbplustree.tree.NodeEntity;
 import java.util.Comparator;
 
@@ -15,11 +14,11 @@ import java.util.Comparator;
  */
 public class NodeEntityComparator implements Comparator<NodeEntity> {
 
-    @Override
-    public int compare(NodeEntity dn1, NodeEntity dn2) {
-        NaturalComparator nc=  new NaturalComparator();
-        return nc.compare(dn1.getKey(), dn2.getKey());
+  @Override
+  public int compare(NodeEntity dn1, NodeEntity dn2) {
+    NaturalComparator nc = new NaturalComparator();
+    return nc.compare(dn1.getKey(), dn2.getKey());
 //        return dn1.getKey().compareTo(dn2.getKey());
-    }
-    
+  }
+
 }

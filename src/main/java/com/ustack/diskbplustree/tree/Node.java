@@ -3,81 +3,142 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.ustack.diskbplustree.tree;
 
-import com.ustack.spi.logger.ConsoleLogWriter;
-import com.ustack.spi.logger.Logger;
 import com.ustack.diskbplustree.helpers.NodeEntityComparator;
+
 import java.io.Serializable;
 import java.util.Arrays;
+//import com.ustack.spi.logger.ConsoleLogWriter;
+//import com.ustack.spi.logger.Logger;
 
 /**
  *
- * @author AdminPC
+ * @author AdminPC.
  */
 public abstract class Node implements Serializable {
 
-    private NodeEntity[] entities;
-    private transient int visitCount;
-    protected long parent;
-    protected transient Tree tree;
-    protected transient boolean isDirty;
-    private long nodeOffset;
-    protected transient static Logger log = new Logger("test", new ConsoleLogWriter());
-    private final int position;
+  private NodeEntity[] entities;
+  private transient int visitCount;
+  protected int parent;
+  protected transient Tree tree;
+  protected transient boolean isDirty;
+  private final int position;
+//    private long nodeOffset;
+//    protected transient static Logger log = new Logger("test", new ConsoleLogWriter());
 
-    public Node(Tree tree) {
-        this.tree = tree;
-        parent = (-1);
-        nodeOffset = (-1);
-        entities = new NodeEntity[ConstantsOfTree.DEGREE - 1];/* new NodeEntity[this.tree.getDegree() - 1];*/
-        visitCount = 0;
-        position = tree.getNodeCount() * tree.getNodeSize();
-        nodeOffset = NodeSerializer.initialSerialization(this);
-        isDirty = false;
-        tree.increaseNodeCount();
+  /**
+   *
+   * @param tree tree.
+   */
+  public Node(Tree tree) {
+    this.tree = tree;
+    parent = (-1);
+//        nodeOffset = (-1);
+    entities = new NodeEntity[ConstantsOfTree.DEGREE - 1];/* new NodeEntity[this.tree.getDegree() - 1];*/
+    visitCount = 0;
+    position = tree.getNodeCount() * tree.getNodeSize();
+    /*nodeOffset =*/ NodeSerializer.initialSerialization(this, tree);
+    isDirty = false;
+    tree.increaseNodeCount();
 //        this.tree.getInMemoryNodes().addNode(this);
-    }
+  }
 
-    public void setTree(Tree tree) {
-        this.tree = tree;
+  /**
+   *
+   * @param entities entities.
+   * @param parent parent
+   * @param tree tree
+   * @param position position
+   */
+  public Node(NodeEntity[] entities, int parent, Tree tree, int position) {
+    this.tree = tree;
+    this.parent = parent;
+    this.entities = new NodeEntity[ConstantsOfTree.DEGREE - 1];
+    for (int i = 0; i < entities.length; i++) {
+      if (i < (ConstantsOfTree.DEGREE - 1)) {
+        this.entities[i] = entities[i];
+      } else {
+        break;
+      }
     }
+//        System.arraycopy(entities,0,this.entities,0,entities.length);
+    visitCount = 0;
+    this.position = position;
+    isDirty = false;
+  }
 
-    public Node increaseVisitCount() {
-        visitCount = visitCount + 1;
-        return this;
-    }
+  /**
+   *
+   * @param tree tree.
+   */
+  public void setTree(Tree tree) {
+    this.tree = tree;
+  }
 
-    public int getPosition() {
-        return position;
-    }
+  /**
+   *
+   * @return node.
+   */
+  public Node increaseVisitCount() {
+    visitCount = visitCount + 1;
+    return this;
+  }
 
-    public int getVisitCount() {
-        return this.visitCount;
-    }
+  /**
+   *
+   * @return position of node.
+   */
+  public int getPosition() {
+    return position;
+  }
 
-    public void serialize() {
-        log.info("serializing");
-        NodeSerializer.serializeNode(this);
-    }
+  /**
+   *
+   * @return number of visits per node.
+   */
+  public int getVisitCount() {
+    return this.visitCount;
+  }
 
-    public boolean isFull() {
-        return getEntityCount() >= (ConstantsOfTree.DEGREE - 1);
-    }
+  /**
+   *
+   * @param tree tree.
+   */
+  public void serialize(Tree tree) {
+//        log.info("serializing");
+    NodeSerializer.serializeNode(this, tree);
+  }
 
-    public long getEntityCount() {
-        long count = 0;
-        for (NodeEntity entity : entities) {
-            if (entity != null) {
-                count = count + 1;
-            }
+  /**
+   * @author AdminPC.
+   * @return isNode full
+   */
+  public boolean isFull() {
+    return getEntityCount() >= (ConstantsOfTree.DEGREE - 1);
+  }
+
+  /**
+   * @return integer count of entities.
+   */
+  public int getEntityCount() {
+    int count = 0;
+    for (NodeEntity entity : entities) {
+      if (entity != null) {
+        if (!entity.getKey().equals(0L)) {
+          count = count + 1;
         }
-        return count;
+      }
     }
+    return count;
+  }
 
-    public void sortEntities() {
-
-        Arrays.sort(entities, 0, (int) getEntityCount(), new NodeEntityComparator());
+  /**
+   * @author AdminPC.
+   */
+  public void sortEntities() {
+    Arrays.sort(entities, 0, (int) getEntityCount(), new NodeEntityComparator());
 //        System.out.println(this.toString());
 //        if (getEntityCount() > 1) {
 //            List<NodeEntity> list = Arrays.asList(this.entities);
@@ -103,122 +164,140 @@ public abstract class Node implements Serializable {
 //
 //        }
 
-    }
+  }
 
-    public NodeEntity[] getEntities() {
-        return this.entities;
-    }
+  /**
+   * @return node entities list.
+   */
+  public NodeEntity[] getEntities() {
+    return this.entities;
+  }
+  
+  /**
+   * @param entity entity.
+   * @return whether node added
+   */
+  public boolean addEntity(NodeEntity entity) {
 
-    public boolean addEntity(NodeEntity entity) {
-
-        boolean isSet = false;
+    boolean isSet = false;
 //        Integer key;
 //        try {
 //            Double d = (Double) entity.getKey();
 //            key = d.intValue();
 //            entity.setKey(key);
-        for (int i = 0; i < entities.length; i++) {
-            if (entities[i] == null) {
-                entities[i] = entity;
-                isSet = true;
-                break;
-            }
-        }
-        sortEntities();
-        isDirty = true;
-        return isSet;
+    for (int i = 0; i < entities.length; i++) {
+      if (entities[i] == null || entities[i].getKey().equals(0L)) {
+        entities[i] = entity;
+        isSet = true;
+        break;
+      }
+    }
+    sortEntities();
+    isDirty = true;
+//    System.out.println("is inserted ?" +isSet);
+    return isSet;
 //        } catch (ClassCastException e) {
 //            System.out.println( entity.getKey().getClass());
 //        }
 //        return false;
-    }
+  }
 
-    private void reOrder() {
-        for (int i = 0; i < entities.length; i++) {
-            if (entities[i] == null) {
-                for (int k = (i + 1); k < entities.length; k++) {
-                    if (entities[k] != null) {
-                        entities[i] = entities[k];
-                        entities[k] = null;
-                        break;
-                    }
-                }
-            }
+  /**
+   * @author AdminPC.
+   */
+  private void reOrder() {
+    for (int i = 0; i < entities.length; i++) {
+      if (entities[i] == null) {
+        for (int k = (i + 1); k < entities.length; k++) {
+          if (entities[k] != null) {
+            entities[i] = entities[k];
+            entities[k] = null;
+            break;
+          }
         }
+      }
     }
+  }
 
-    public NodeEntity removeEntity(int index) {
-        NodeEntity nodeEntity = null;
-        if (index < entities.length) {
-            nodeEntity = entities[index];
-            entities[index] = null;
-            reOrder();
-        }
-        isDirty = true;
-        return nodeEntity;
+  /**
+   * @param index index.
+   * @return  node entity
+   */
+  public NodeEntity removeEntity(int index) {
+    NodeEntity nodeEntity = null;
+    if (index < entities.length) {
+      nodeEntity = entities[index];
+      entities[index] = null;
+      reOrder();
     }
+    isDirty = true;
+    return nodeEntity;
+  }
 
-    public void clearEntities() {
-        Arrays.fill(this.entities, null);
-        isDirty = true;
+  /**  
+   * @author AdminPC.
+   */
+  public void clearEntities() {
+    Arrays.fill(this.entities, null);
+    isDirty = true;
+  }
+
+  /**  
+   * @author AdminPC.
+   * @param entitiesArray entitiesArray
+   */
+  public void addAllEntities(NodeEntity[] entitiesArray) {
+    if (entitiesArray.length == (ConstantsOfTree.DEGREE - 1)) {
+      this.entities = new LeafNodeEntity[ConstantsOfTree.DEGREE - 1];
+      this.entities = entitiesArray;
+      sortEntities();
+      isDirty = true;
+    } else {
+//            log.warn("ADD ALL WITH DIFFRENT SIZED ARRAY N NOT COMPATIBLE :( NOT ADDED");
     }
+  }
 
-    public void addAllEntities(NodeEntity[] entitiesArray) {
-        if (entitiesArray.length == (ConstantsOfTree.DEGREE - 1)) {
-            this.entities = new LeafNodeEntity[ConstantsOfTree.DEGREE - 1];
-            this.entities = entitiesArray;
-            sortEntities();
-            isDirty = true;
-        } else {
-            log.warn("ADD ALL WITH DIFFRENT SIZED ARRAY N NOT COMPATIBLE :( NOT ADDED");
-        }
-    }
+//    public long getNodeOffset() {
+//        return nodeOffset;
+//    }
+//
+//    public void setNodeOffset(long offset) {
+//        this.nodeOffset = offset;
+//        isDirty = true;
+//    }
+  public abstract LeafNode getRange(Object start, Object end);
 
-    public long getNodeOffset() {
-        return nodeOffset;
-    }
+  public abstract LeafNode getGreaterThan(Object start);
 
-    public void setNodeOffset(long offset) {
-        this.nodeOffset = offset;
-        isDirty = true;
-    }
+  public abstract LeafNode getLessThan(Object start);
 
-    /*
-     *
-     */
-    public abstract LeafNode getRange(Object start, Object end);
+  public abstract void printTree();
 
-    public abstract LeafNode getGreaterThan(Object start);
+  public abstract void checkAvailabilityToInsert(Long key, Object data);
 
-    public abstract LeafNode getLessThan(Object start);
+  public abstract boolean isKeyAvailable(Long key);
 
-    public abstract void printTree();
+  public abstract LeafNode searchNode(Long key);
 
-    public abstract void checkAvailabilityToInsert(Integer key, Object data);
+  public abstract Object search(Long key);
 
-    public abstract boolean isKeyAvailable(Integer key);
+  public abstract void append(Long key, Object dataObject);
 
-    public abstract LeafNode searchNode(Integer key);
-
-    public abstract Object search(Integer key);
-
-    public abstract void append(Integer key, Object dataObject);
-
-    public abstract void insert(Integer key, Object dataObject);
+  public abstract void insert(Long key, Object dataObject);
 
 //    public abstract void split(NodeEntity internalNodeEntity);
-    public boolean isLeafNode() {
-        return this instanceof LeafNode;
-    }
+  public boolean isLeafNode() {
+    return this instanceof LeafNode;
+  }
 
-    public void setParent(long parentOffset) {
-        this.parent = parentOffset;
-        isDirty = true;
-    }
+  public void setParent(int parentOffset) {
+    this.parent = parentOffset;
+    isDirty = true;
+  }
 
-    public long getParent() {
-        return this.parent;
-    }
+  public int getParent() {
+    return this.parent;
+  }
 
 //    public long findParent() {
 //        if (this.parent != -1) {
@@ -227,14 +306,16 @@ public abstract class Node implements Serializable {
 //            return this;
 //        }
 //    }
-    @Override
-    public String toString() {
-        String entitiesList = "";
+  
+  @Override
+  public String toString() {
+    String entitiesList = "";
 
-        for (int i = 0; i < getEntityCount(); i++) {
-            entitiesList = entitiesList + " [" + entities[i].getKey() + "] ";
-        }
-        return "Node{" + "entities=" + entitiesList + "\n, visitCount=" + visitCount + ", parent=" + parent + ", nodeOffset=" + nodeOffset + '}';
+    for (int i = 0; i < getEntityCount(); i++) {
+      entitiesList = entitiesList + " [" + entities[i].getKey() + "] ";
     }
+    return "Node{" + "entities=" + entitiesList + "\n, visitCount=" + visitCount
+            + ", parent=" + parent + '}';
+  }
 
 }

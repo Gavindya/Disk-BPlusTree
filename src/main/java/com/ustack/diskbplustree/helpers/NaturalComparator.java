@@ -13,7 +13,8 @@ import java.util.Comparator;
  * @author AdminPC
  * @param <T>
  */
-public class NaturalComparator<T extends Comparable<T>> implements Comparator<T>,Serializable {
+public class NaturalComparator<T extends Comparable<T>> implements Comparator<T>, Serializable {
+
   @Override
   public int compare(T a, T b) {
     return a.compareTo(b);

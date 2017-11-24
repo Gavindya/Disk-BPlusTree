@@ -15,15 +15,16 @@ import java.util.ArrayList;
  */
 public class LeafNodeEntity extends NodeEntity {
 
-  private final ArrayList<Long> offset;
-  private long longOffset;
+//  private final ArrayList<Long> offset;
+//  private long longOffset;
 
   public LeafNodeEntity(Long key, Tree tree) {
     super(key, tree);
-    offset = new ArrayList<>();
+//    offset = new ArrayList<>();
   }
 
   private void writeValue(Object data) {
+    System.out.println(data+" written");
 //        try {
 //            String filePath = ConstantsOfTree.DB_FILE_PATH;/*tree.getDbFilePath();*/
 //            File file = new File(filePath);
@@ -54,23 +55,23 @@ public class LeafNodeEntity extends NodeEntity {
     writeValue(data);
   }
 
-  private String valueFound(long index, String filePath) {
-    try (RandomAccessFile randomAccessFile = new RandomAccessFile(new File(filePath), "r")) {
-      randomAccessFile.seek(index);
-      StringBuilder stringBuilder = new StringBuilder();
-      int character = randomAccessFile.read();
-      while ((character != -1) && (character != 0x1e)) {
-        stringBuilder.append((char) character);
-        character = randomAccessFile.read();
-      }
-      return stringBuilder.toString();
-    } catch (Exception ex) {
-      return "";
-    }
-  }
+//  private String valueFound(long index, String filePath) {
+//    try (RandomAccessFile randomAccessFile = new RandomAccessFile(new File(filePath), "r")) {
+//      randomAccessFile.seek(index);
+//      StringBuilder stringBuilder = new StringBuilder();
+//      int character = randomAccessFile.read();
+//      while ((character != -1) && (character != 0x1e)) {
+//        stringBuilder.append((char) character);
+//        character = randomAccessFile.read();
+//      }
+//      return stringBuilder.toString();
+//    } catch (Exception ex) {
+//      return "";
+//    }
+//  }
 
   public void setDataOffset(long offset) {
-    this.longOffset = offset;
+//    this.longOffset = offset;
   }
 
   public long getOffset() {

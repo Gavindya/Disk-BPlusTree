@@ -13,7 +13,7 @@ import com.ustack.diskbplustree.diskoperations.MmapHandler;
  */
 public class NodeSerializer {
 
-  static MmapHandler mmapHandler = new MmapHandler(1024 * 1024 * 1024);
+  private static final MmapHandler MMAP_HANDLER = new MmapHandler(1024 * 1024 * 1024);
 
   /**
    *
@@ -21,7 +21,7 @@ public class NodeSerializer {
    * @param tree tree
    */
   public static void initialSerialization(Node node, Tree tree) {
-    mmapHandler.serializeNode(node, tree);
+    MMAP_HANDLER.serializeNode(node, tree);
   }
 
   /**
@@ -31,7 +31,7 @@ public class NodeSerializer {
    */
   public static void serializeNode(Node node, Tree tree) {
     if (node.isDirty) {
-      mmapHandler.serializeNode(node, tree);
+      MMAP_HANDLER.serializeNode(node, tree);
     }
   }
 
@@ -40,8 +40,8 @@ public class NodeSerializer {
    * @author AdminPC.
    */
   public static void closeMemMap() {
-    if (mmapHandler != null) {
-      mmapHandler.close();
+    if (MMAP_HANDLER != null) {
+      MMAP_HANDLER.close();
     }
   }
 
@@ -52,7 +52,7 @@ public class NodeSerializer {
    * @return node
    */
   public static Node deSerializeNode(int nodeOffset, Tree tree) {
-    return mmapHandler.deSerializeNode(nodeOffset, tree);
+    return MMAP_HANDLER.deSerializeNode(nodeOffset, tree);
   }
 
 }

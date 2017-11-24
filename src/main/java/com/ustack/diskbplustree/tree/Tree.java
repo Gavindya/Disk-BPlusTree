@@ -44,19 +44,19 @@ public class Tree implements Serializable {
   private void calculateSizes(int nodeSize) {
     if ((nodeSize % 8) != 0) {
       System.out.println("node Size is inapropriate");
-      System.exit(0);
+//      System.exit(0);
       return;
     }
     int slots = nodeSize / 8;
     if (slots < 12) {
       System.out.println("node Size is inapropriate");
-      System.exit(0);
+//      System.exit(0);
       return;
     }
     int usableSlots = slots - 5;
     if (usableSlots % 2 != 1) {
       System.out.println("node Size is inapropriate");
-      System.exit(0);
+//      System.exit(0);
       return;
     }
 

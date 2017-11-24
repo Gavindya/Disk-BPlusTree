@@ -23,18 +23,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MmapHandler {
 
-  private final File directoryName;
   private final Map<Integer, MmapFile> files = new ConcurrentHashMap<>();
   private MmapFile lastAccessFile = null;
   private final int maxFileSize;
 
   public MmapHandler(int maxSizeOfaFile) {
-    this.directoryName = new File(ConstantsOfTree.DB_PATH);
+    File directoryName = new File(ConstantsOfTree.DB_PATH);
     this.maxFileSize = maxSizeOfaFile;
-    this.directoryName.mkdir();
+    directoryName.mkdir();
     if (!directoryName.isDirectory()) {
       System.out.println("NOT A DIRECTORY");
-      System.exit(0);
+      return;
     }
   }
 

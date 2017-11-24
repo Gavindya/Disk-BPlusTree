@@ -21,7 +21,6 @@ import java.nio.channels.FileChannel;
  */
 public class MmapFile {
 
-  private Tree tree;
   private RandomAccessFile randomAccessFile;
   private MappedByteBuffer memoryMappedByteBuffer;
   private int fileIndex;
@@ -47,10 +46,6 @@ public class MmapFile {
     } catch (IOException ex) {
       log.exception(ex, " IOException {0} ", ex.getMessage());
     }
-  }
-
-  public void setTree(Tree tree) {
-    this.tree = tree;
   }
 
   public void putLong(int pos, long data) {

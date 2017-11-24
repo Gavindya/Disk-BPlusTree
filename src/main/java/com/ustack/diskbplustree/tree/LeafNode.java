@@ -85,11 +85,11 @@ public class LeafNode extends Node {
     }
     boolean available = false;
     for (int i = 0; i < getEntityCount(); i++) {
-      if (getEntities()[i] != null) {
-        if (getEntities()[i].getKey().equals(key)) {
+      if (getEntities()[i] != null && /*) {
+        if (*/getEntities()[i].getKey().equals(key)) {
           available = true;
           return available;
-        }
+//        }
       }
     }
     return available;
@@ -141,10 +141,10 @@ public class LeafNode extends Node {
   public Object search(Long key) {
     try {
       for (NodeEntity e : super.getEntities()) {
-        if (e != null) {
-          if (e.getKey().equals(key)) {
+        if (e != null &&/*) {
+          if (*/e.getKey().equals(key)) {
             return ((LeafNodeEntity) e).getValue();
-          }
+//          }
         }
 
       }
@@ -194,6 +194,7 @@ public class LeafNode extends Node {
     int split_location = ConstantsOfTree.getSplitLocation();
     LeafNode rightLeafNode = createRightNode(split_location, tempList);
     updateThisNode(split_location, tempList);
+    setAppropriateNeighbours(rightLeafNode);
     validateParent();
     linkWithParent(rightLeafNode);
   }

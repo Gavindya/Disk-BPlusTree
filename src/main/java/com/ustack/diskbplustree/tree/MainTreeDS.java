@@ -5,8 +5,6 @@
  */
 package com.ustack.diskbplustree.tree;
 
-//import com.ustack.spi.logger.ConsoleLogWriter;
-//import com.ustack.spi.logger.Logger;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,21 +21,18 @@ import org.github.jamm.MemoryMeter;
  */
 public class MainTreeDS {
 
-//    private static final Logger log = new Logger("test", new ConsoleLogWriter());
   private static Tree getTree() {
     try {
-      FileInputStream fileIn = new FileInputStream(ConstantsOfTree.TREE_PATH);
-      ObjectInputStream in = new ObjectInputStream(fileIn);
-      Tree tree = (Tree) in.readObject();
-      in.close();
-      fileIn.close();
+      Tree tree;
+      try (FileInputStream fileIn = new FileInputStream(ConstantsOfTree.TREE_PATH); ObjectInputStream in = new ObjectInputStream(fileIn)) {
+        tree = (Tree) in.readObject();
+      }
       return tree;
     } catch (IOException i) {
-      i.printStackTrace();
+      System.out.println(i.getMessage());
       return null;
     } catch (ClassNotFoundException c) {
       System.out.println("Tree class not found");
-      c.printStackTrace();
       return null;
     }
   }

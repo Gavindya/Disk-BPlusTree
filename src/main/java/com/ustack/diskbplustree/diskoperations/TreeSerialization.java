@@ -7,26 +7,28 @@ package com.ustack.diskbplustree.diskoperations;
 
 import com.ustack.diskbplustree.tree.ConstantsOfTree;
 import com.ustack.diskbplustree.tree.Tree;
+import com.ustack.spi.logger.ConsoleLogWriter;
+import com.ustack.spi.logger.Logger;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 /**
  *
- * @author Yasith Jayawardana
+ * @author Gavindya
  */
 public class TreeSerialization {
 
+  protected transient static Logger log = new Logger("test", new ConsoleLogWriter());
+  
   public static void serializeTree(Tree tree) {
     try {
-      try (FileOutputStream fileOut = new FileOutputStream(ConstantsOfTree.TREE_PATH)) {
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+      try (FileOutputStream fileOut = new FileOutputStream(ConstantsOfTree.TREE_PATH); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
         out.writeObject(tree);
-        out.close();
       }
-//            System.out.printf("Serialized data is saved in /tmp/employee.ser");
     } catch (IOException ex) {
-      ex.printStackTrace();
+      log.exception(ex, "IOException {0}", ex.getMessage());
     }
 
   }

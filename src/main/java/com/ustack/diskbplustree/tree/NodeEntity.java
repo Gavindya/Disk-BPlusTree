@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.ustack.diskbplustree.tree;
 
 import java.io.Serializable;
-//import com.ustack.spi.logger.Logger;
 
 /**
  *
@@ -17,7 +15,6 @@ public class NodeEntity implements Serializable {
 
   protected transient Tree tree;
   private Long key;
-//    protected transient static Logger log = new Logger("test", new ConsoleLogWriter());
 
   public NodeEntity(Long key, Tree tree) {
     this.key = key;
@@ -32,6 +29,7 @@ public class NodeEntity implements Serializable {
     return key;
   }
 
+  @Override
   public String toString() {
     return "[" + key + "]";
   }

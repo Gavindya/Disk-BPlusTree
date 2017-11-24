@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class LeafNodeEntity extends NodeEntity {
 
-  private ArrayList<Long> offset;
+  private final ArrayList<Long> offset;
   private long longOffset;
 
   public LeafNodeEntity(Long key, Tree tree) {
@@ -69,13 +69,6 @@ public class LeafNodeEntity extends NodeEntity {
     }
   }
 
-//    private void printOffsets() {
-//        System.out.print("offsets = ");
-//        for (Long l : offset) {
-//            System.out.print(l + ",");
-//        }
-//        System.out.println();
-//    }
   public void setDataOffset(long offset) {
     this.longOffset = offset;
   }

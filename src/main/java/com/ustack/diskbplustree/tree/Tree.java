@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.ustack.diskbplustree.tree;
 
 import com.ustack.diskbplustree.diskoperations.TreeSerialization;
 
 import java.io.Serializable;
-//import com.ustack.spi.logger.Logger;
 
 /**
  * @author AdminPC.
@@ -25,12 +23,11 @@ public class Tree implements Serializable {
   private int parentOffset;
   private int positionOffset;
 
-  private int nodeSize;
+  private final int nodeSize;
   private int nodeCount;
   private int keyCount;
   private final InMemoryNodes inMemoryNodes;
   public Node root;
-//    transient Logger log = new Logger("test", new ConsoleLogWriter());
 
   /**
    * @param nodesize node size in integer(4096 bytes).
@@ -39,10 +36,8 @@ public class Tree implements Serializable {
     nodeCount = 0;
     nodeSize = nodesize;
     root = new LeafNode(this);
-//        root.serialize();
     inMemoryNodes = new InMemoryNodes(this);
     inMemoryNodes.addNode(root, this);
-
     calculateSizes(nodeSize);
   }
 
@@ -57,14 +52,12 @@ public class Tree implements Serializable {
       System.out.println("node Size is inapropriate");
       System.exit(0);
       return;
-//            throw new BTreeException("node size is less than miniumum size");
     }
     int usableSlots = slots - 5;
     if (usableSlots % 2 != 1) {
       System.out.println("node Size is inapropriate");
       System.exit(0);
       return;
-//            throw new BTreeException("invalid node size");
     }
 
     keyCount = usableSlots / 2;
@@ -127,7 +120,6 @@ public class Tree implements Serializable {
   }
 
   public InMemoryNodes getInMemoryNodes() {
-//        log.info("ïnmem " + inMemoryNodes);
     return inMemoryNodes;
   }
 
@@ -142,57 +134,13 @@ public class Tree implements Serializable {
   public Node getRoot() {
     return root;
   }
-//    public Tree(int degree, String dbPath,long memoryNodes) {
-//        this.degree = degree;
-//        root = new LeafNode(this);
-//        this.memoryNodes=memoryNodes;
-////        counter=1;
-//        this.dbPath = dbPath;
-//        this.inMemoryNodes = new InMemoryNodes(dbPath + "\\nodes.txt");
-////        File db = new File(this.dbPath);
-////        db.mkdir();
-////        File file = new File(this.dbPath + "\\db.txt");
-////        if (!file.exists()) {
-////            try {
-////                file.createNewFile();
-////            } catch (IOException ex) {
-////                log.exception(ex, "IOException {0}",ex.getMessage());
-////            }
-////        }
-//    }
 
-//    public String getDbPath() {
-//        return this.dbPath;
-//    }
-//    public long getMemoryNodesLimit(){
-//        return memoryNodes;
-//    }
-//    public int getDegree(){
-//        return degree;
-//    }
-//    public String getNodeFilePath() {
-//        return this.dbPath + "\\nodes.txt";
-//    }
-//    
-//    public String getDbFilePath() {
-//        return this.dbPath + "\\db.txt";
-//    }
-//  public void unloadTree() {
-////        root.unloadDataOfChildren();
-//  }
   /**
    * @param key key.
    * @param data data
    */
   public void insert(Long key, Object data) {
     root.checkAvailabilityToInsert(key, data);
-//        if (root.isKeyAvailable(key,data)) {
-////            System.out.println("KEY AVAILABLE ");
-//            root.append(key, data);
-//        } else {
-//            root.insert(key, data);
-//        }
-
   }
 
   /**
@@ -206,13 +154,10 @@ public class Tree implements Serializable {
    * @author AdminPC.
    * @param key key
    */
-  public void search(Long /*originalKey*/ key) {
-//        int key = originalKey.hashCode();
-//        System.out.println("searching = " + key);
+  public void search(Long key) {
     Object found = root.search(key);
     if (found != null) {
-      System.out.println("FOUND for " + String.valueOf(key)/*key.toString()*/ + " = " + found.toString());
-//            log.info("FOUND "+ found.toString());
+      System.out.println("FOUND for " + String.valueOf(key) + " = " + found.toString());
     } else {
       System.out.println("NOT FOUND for " + String.valueOf(key)/*key.toString()*/ + "  not found ");
     }

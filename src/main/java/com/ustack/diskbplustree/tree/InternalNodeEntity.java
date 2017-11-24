@@ -49,7 +49,6 @@ public class InternalNodeEntity extends NodeEntity {
   public Node getRightNode(Tree tree) {
     if (rightNodeOffset != (-1)) {
       Node node = tree.getInMemoryNodes().getNode(rightNodeOffset, tree);
-//            System.out.println("right node - "+node.toString());
       return node;
     } else {
       return null;

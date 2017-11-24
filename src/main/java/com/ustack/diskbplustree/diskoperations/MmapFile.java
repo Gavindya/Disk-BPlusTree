@@ -5,10 +5,11 @@
  */
 package com.ustack.diskbplustree.diskoperations;
 
-//import com.ustack.spi.logger.ConsoleLogWriter;
-//import com.ustack.spi.logger.Logger;
+import com.ustack.spi.logger.ConsoleLogWriter;
+import com.ustack.spi.logger.Logger;
 import com.ustack.diskbplustree.tree.ConstantsOfTree;
 import com.ustack.diskbplustree.tree.Tree;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
@@ -24,9 +25,9 @@ public class MmapFile {
   private RandomAccessFile randomAccessFile;
   private MappedByteBuffer memoryMappedByteBuffer;
   private int fileIndex;
-//    protected transient static Logger log = new Logger("test", new ConsoleLogWriter());
+  protected transient static Logger log = new Logger("test", new ConsoleLogWriter());
 
-  public MmapFile(/*String filename, */long filesize, int fileIndx) {
+  public MmapFile(long filesize, int fileIndx) {
     try {
       this.fileIndex = fileIndx;
       randomAccessFile = new RandomAccessFile(ConstantsOfTree.DB_PATH + "\\" + fileIndx + ".txt", "rw");
@@ -36,7 +37,7 @@ public class MmapFile {
       //memMap of file size
       memoryMappedByteBuffer = randomAccessFile.getChannel().map(FileChannel.MapMode.READ_WRITE, 0, filesize);
     } catch (IOException ex) {
-//            log.exception(ex, " IOException {0} ", ex.getMessage());
+      log.exception(ex, " IOException {0} ", ex.getMessage());
     }
   }
 
@@ -44,7 +45,7 @@ public class MmapFile {
     try {
       randomAccessFile.close();
     } catch (IOException ex) {
-      ex.printStackTrace();
+      log.exception(ex, " IOException {0} ", ex.getMessage());
     }
   }
 

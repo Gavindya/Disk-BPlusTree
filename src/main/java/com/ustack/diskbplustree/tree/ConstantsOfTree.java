@@ -11,7 +11,6 @@ package com.ustack.diskbplustree.tree;
  */
 public class ConstantsOfTree {
 
-//    public static long MEMORY_LIMIT_NODES = 5;
   public static String DB_PATH = "C:\\Users\\AdminPC\\Documents\\gavindya\\bpTree\\db";
   public static int DEGREE = 254;
   public static String TREE_PATH = DB_PATH + "\\tree.ser";

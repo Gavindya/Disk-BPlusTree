@@ -11,22 +11,19 @@ import java.io.ObjectOutputStream;
 
 /**
  *
- * @author Yasith Jayawardana
+ * @author Gavindya
  */
 public class TreeSerialization {
 
-    public static void serializeTree(Tree tree) {
-        try {
-            try (FileOutputStream fileOut = new FileOutputStream(ConstantsOfTree.TREE_PATH); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-                out.writeObject(tree);
-            }
-//            System.out.printf("Serialized data is saved in /tmp/employee.ser");
-//            System.out.printf("Serialized data is saved in /tmp/employee.ser");
-                    } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-//            ex.printStackTrace();
-        }
-
+  public static void serializeTree(Tree tree) {
+    try {
+      try (FileOutputStream fileOut = new FileOutputStream(ConstantsOfTree.TREE_PATH); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+        out.writeObject(tree);
+      }
+    } catch (IOException ex) {
+      System.out.println(ex.getMessage());
     }
+
+  }
 
 }

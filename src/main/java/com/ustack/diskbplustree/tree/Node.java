@@ -10,8 +10,6 @@ import com.ustack.diskbplustree.helpers.NodeEntityComparator;
 
 import java.io.Serializable;
 import java.util.Arrays;
-//import com.ustack.spi.logger.ConsoleLogWriter;
-//import com.ustack.spi.logger.Logger;
 
 /**
  *
@@ -25,8 +23,6 @@ public abstract class Node implements Serializable {
   protected transient Tree tree;
   protected transient boolean isDirty;
   private final int position;
-//    private long nodeOffset;
-//    protected transient static Logger log = new Logger("test", new ConsoleLogWriter());
 
   /**
    *
@@ -35,14 +31,12 @@ public abstract class Node implements Serializable {
   public Node(Tree tree) {
     this.tree = tree;
     parent = (-1);
-//        nodeOffset = (-1);
     entities = new NodeEntity[ConstantsOfTree.DEGREE - 1];/* new NodeEntity[this.tree.getDegree() - 1];*/
     visitCount = 0;
     position = tree.getNodeCount() * tree.getNodeSize();
-    /*nodeOffset =*/ NodeSerializer.initialSerialization(this, tree);
+    NodeSerializer.initialSerialization(this, tree);
     isDirty = false;
     tree.increaseNodeCount();
-//        this.tree.getInMemoryNodes().addNode(this);
   }
 
   /**
@@ -63,7 +57,6 @@ public abstract class Node implements Serializable {
         break;
       }
     }
-//        System.arraycopy(entities,0,this.entities,0,entities.length);
     visitCount = 0;
     this.position = position;
     isDirty = false;
@@ -107,7 +100,6 @@ public abstract class Node implements Serializable {
    * @param tree tree.
    */
   public void serialize(Tree tree) {
-//        log.info("serializing");
     NodeSerializer.serializeNode(this, tree);
   }
 
@@ -139,31 +131,6 @@ public abstract class Node implements Serializable {
    */
   public void sortEntities() {
     Arrays.sort(entities, 0, (int) getEntityCount(), new NodeEntityComparator());
-//        System.out.println(this.toString());
-//        if (getEntityCount() > 1) {
-//            List<NodeEntity> list = Arrays.asList(this.entities);
-//            for (NodeEntity e : list) {
-//                if (e != null) {
-//                    e.setKey(Double.valueOf(e.getKey().toString()));
-//                }
-//            }
-//            list = list.stream()
-//                    .filter(entity -> Objects.nonNull(entity))
-//                    .collect(Collectors.toList());
-//
-//            Collections.sort(list, new NodeEntityComparator());
-//            this.entities = new NodeEntity[ConstantsOfTree.DEGREE - 1];
-//            NodeEntity[] array = list.toArray(new NodeEntity[list.size()]);
-//            if (entities.length == array.length) {
-//                list.toArray(this.entities);
-//            } else {
-//                for (int i = 0; i < array.length; i++) {
-//                    this.entities[i] = array[i];
-//                }
-//            }
-//
-//        }
-
   }
 
   /**
@@ -180,11 +147,6 @@ public abstract class Node implements Serializable {
   public boolean addEntity(NodeEntity entity) {
 
     boolean isSet = false;
-//        Integer key;
-//        try {
-//            Double d = (Double) entity.getKey();
-//            key = d.intValue();
-//            entity.setKey(key);
     for (int i = 0; i < entities.length; i++) {
       if (entities[i] == null || entities[i].getKey().equals(0L)) {
         entities[i] = entity;
@@ -194,12 +156,7 @@ public abstract class Node implements Serializable {
     }
     sortEntities();
     isDirty = true;
-//    System.out.println("is inserted ?" +isSet);
     return isSet;
-//        } catch (ClassCastException e) {
-//            System.out.println( entity.getKey().getClass());
-//        }
-//        return false;
   }
 
   /**
@@ -253,18 +210,10 @@ public abstract class Node implements Serializable {
       sortEntities();
       isDirty = true;
     } else {
-//            log.warn("ADD ALL WITH DIFFRENT SIZED ARRAY N NOT COMPATIBLE :( NOT ADDED");
+      System.out.println("ADD ALL WITH DIFFRENT SIZED ARRAY N NOT COMPATIBLE");
     }
   }
-
-//    public long getNodeOffset() {
-//        return nodeOffset;
-//    }
-//
-//    public void setNodeOffset(long offset) {
-//        this.nodeOffset = offset;
-//        isDirty = true;
-//    }
+  
   public abstract LeafNode getRange(Object start, Object end);
 
   public abstract LeafNode getGreaterThan(Object start);
@@ -285,7 +234,6 @@ public abstract class Node implements Serializable {
 
   public abstract void insert(Long key, Object dataObject);
 
-//    public abstract void split(NodeEntity internalNodeEntity);
   public boolean isLeafNode() {
     return this instanceof LeafNode;
   }
@@ -298,14 +246,6 @@ public abstract class Node implements Serializable {
   public int getParent() {
     return this.parent;
   }
-
-//    public long findParent() {
-//        if (this.parent != -1) {
-//            return ((InternalNode) this.parent).findParent();
-//        } else {
-//            return this;
-//        }
-//    }
   
   @Override
   public String toString() {

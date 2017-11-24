@@ -31,11 +31,9 @@ public class InternalNode extends Node {
   public boolean isKeyAvailable(Long key) {
     boolean available = false;
     for (NodeEntity e : getEntities()) {
-      if (e != null) {
-        if (e.getKey().equals(key)) {
-          available = true;
-          break;
-        }
+      if (e != null && e.getKey().equals(key)) {
+        available = true;
+        break;
       }
     }
     if (!available) {

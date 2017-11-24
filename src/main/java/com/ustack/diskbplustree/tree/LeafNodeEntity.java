@@ -5,9 +5,9 @@
  */
 package com.ustack.diskbplustree.tree;
 
-import java.io.File;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
+//import java.io.File;
+//import java.io.RandomAccessFile;
+//import java.util.ArrayList;
 
 /**
  *
@@ -24,7 +24,7 @@ public class LeafNodeEntity extends NodeEntity {
   }
 
   private void writeValue(Object data) {
-    System.out.println(data+" written");
+//    System.out.println(data+" written");
 //        try {
 //            String filePath = ConstantsOfTree.DB_FILE_PATH;/*tree.getDbFilePath();*/
 //            File file = new File(filePath);

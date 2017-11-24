@@ -150,10 +150,10 @@ public class LeafNode extends Node {
       }
     } catch (NumberFormatException ex) {
       for (NodeEntity e : super.getEntities()) {
-        if (e != null) {
-          if (e.getKey().equals(key)) {
+        if (e != null && /*) {
+          if (*/e.getKey().equals(key)) {
             return ((LeafNodeEntity) e).getValue();
-          }
+//          }
         }
       }
     }
@@ -242,10 +242,10 @@ public class LeafNode extends Node {
 
   private void setAppropriateNeighbours(LeafNode rightLeafNode) {
     rightLeafNode.setNextLeafNode(this.nextLeafNode);
-    if (this.nextLeafNode != (-1)) {
-      if (((LeafNode) tree.getInMemoryNodes().getNode(this.nextLeafNode, tree)) != null) {
+    if (this.nextLeafNode != (-1) &&/*) {
+      if (*/((LeafNode) tree.getInMemoryNodes().getNode(this.nextLeafNode, tree)) != null ) {
         ((LeafNode) tree.getInMemoryNodes().getNode(this.nextLeafNode, tree)).setPreviousLeafNode(rightLeafNode.getPosition());
-      }
+//      }
     }
     rightLeafNode.setPreviousLeafNode(this.getPosition());
     this.setNextLeafNode(rightLeafNode.getPosition());

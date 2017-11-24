@@ -152,12 +152,13 @@ public class MainTreeDS {
   public static void checkSearch(Tree tree) {
     tree.search(Long.valueOf(1));
     tree.search(Long.valueOf(1000));
+//    1000000
     tree.search(1999900l);
     tree.search(Long.valueOf(8000001));
     tree.search(Long.valueOf(9500000));
-//        tree.search(Long.valueOf(99999));
-//        tree.search(Long.valueOf(21980));
-//        tree.search(Long.valueOf(20807));
+        tree.search(Long.valueOf(99999));
+        tree.search(Long.valueOf(21980));
+        tree.search(Long.valueOf(20807));
 //        tree.search(Long.valueOf(162));
 //        tree.search(Long.valueOf(1759147));
 //        tree.search(Long.valueOf(104));
@@ -189,11 +190,11 @@ public class MainTreeDS {
     tree.setTree();
 //        System.out.println(tree.root.toString());
 //        tree.insert(2000009l, 2000009);               
-    checkInsertMillions(tree);
+//    checkInsertMillions(tree);
 //        checkmemory(tree);
 //        checkInsert(tree);
 //        System.out.println("\n\n\n\n");
-//    checkSearch(tree);
+    checkSearch(tree);
 //        System.out.println("\n\n\n\n\n");
 //        checkNodes(tree);
   }

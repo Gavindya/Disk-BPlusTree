@@ -117,10 +117,10 @@ public abstract class Node implements Serializable {
   public int getEntityCount() {
     int count = 0;
     for (NodeEntity entity : entities) {
-      if (entity != null) {
-        if (!entity.getKey().equals(0L)) {
+      if (entity != null && /*) {
+        if (*/!entity.getKey().equals(0L)) {
           count = count + 1;
-        }
+//        }
       }
     }
     return count;

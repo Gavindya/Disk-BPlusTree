@@ -5,10 +5,10 @@
  */
 package com.ustack.diskbplustree.tree;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+//import org.junit.After;
+//import org.junit.AfterClass;
+//import org.junit.Before;
+//import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  */
 public class NodeTest {
 
-  private Tree tree;
+  private final Tree tree;
 
   public NodeTest() {
     tree = new Tree(1024 * 4);

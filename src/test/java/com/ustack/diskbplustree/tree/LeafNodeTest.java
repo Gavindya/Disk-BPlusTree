@@ -18,27 +18,27 @@ import static org.junit.Assert.*;
  */
 public class LeafNodeTest {
 
-  Tree tree;
+  private Tree tree;
 
   public LeafNodeTest() {
     tree = new Tree(1024 * 4);
   }
 
-  @BeforeClass
-  public static void setUpClass() {
-  }
-
-  @AfterClass
-  public static void tearDownClass() {
-  }
-
-  @Before
-  public void setUp() {
-  }
-
-  @After
-  public void tearDown() {
-  }
+//  @BeforeClass
+//  public static void setUpClass() {
+//  }
+//
+//  @AfterClass
+//  public static void tearDownClass() {
+//  }
+//
+//  @Before
+//  public void setUp() {
+//  }
+//
+//  @After
+//  public void tearDown() {
+//  }
 
   /**
    * Test of isFull method, of class LeafNode.
@@ -115,6 +115,7 @@ public class LeafNodeTest {
     int preNode = 0;
     LeafNode instance = new LeafNode(tree);
     instance.setPreviousLeafNode(preNode);
+    assertEquals(0, instance.getPreviousLeafNodeOffset());
 //    // TODO review the generated test code and remove the default call to fail.
 //    fail("The test case is a prototype.");
   }
@@ -128,6 +129,7 @@ public class LeafNodeTest {
     int nextNode = 0;
     LeafNode instance = new LeafNode(tree);
     instance.setNextLeafNode(nextNode);
+    assertEquals(0, instance.getNextLeafNodeOffset());
 //    // TODO review the generated test code and remove the default call to fail.
 //    fail("The test case is a prototype.");
   }

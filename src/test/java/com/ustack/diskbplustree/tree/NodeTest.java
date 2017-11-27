@@ -9,133 +9,129 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-//import org.junit.Test;
-//import static org.junit.Assert.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author AdminPC
  */
 public class NodeTest {
-  
+
+  Tree tree;
+
   public NodeTest() {
+    tree = new Tree(1024 * 4);
   }
-  
+
   @BeforeClass
   public static void setUpClass() {
-    //
+//
   }
-  
+
   @AfterClass
   public static void tearDownClass() {
     //
   }
-  
+
   @Before
   public void setUp() {
     //
   }
-  
+
   @After
   public void tearDown() {
   }
-//
-//  /**
-//   * Test of setTree method, of class Node.
-//   */
-//  @Test
-//  public void testSetTree() {
-//    System.out.println("setTree");
-//    Tree tree = null;
-//    Node instance = null;
-//    instance.setTree(tree);
-//    // TODO review the generated test code and remove the default call to fail.
+
+  /**
+   * Test of setTree method, of class Node.
+   */
+  @Test
+  public void testSetTree() {
+    System.out.println("setTree");
+    Node instance = new LeafNode(tree);
+    instance.setTree(tree);
+    assertEquals(tree, instance.tree);
+    // TODO review the generated test code and remove the default call to fail.
 //    fail("The test case is a prototype.");
-//  }
+  }
 
   /**
    * Test of increaseVisitCount method, of class Node.
    */
-//  @Test
-//  public void testIncreaseVisitCount() {
-//    System.out.println("increaseVisitCount");
-//    LeafNode instance = new LeafNode(null, 0, new Tree(1024*4), 0, 0, 0);
-//    Node result = instance.increaseVisitCount();
-//    System.out.println(result.toString());
-//    assertEquals(1, result.getVisitCount());
-//    // TODO review the generated test code and remove the default call to fail.
-////    fail("The test case is a prototype.");
-//  }
+  @Test
+  public void testIncreaseVisitCount() {
+    System.out.println("increaseVisitCount");
+    LeafNode instance = new LeafNode(tree);
+    instance.increaseVisitCount();
+    assertEquals(1, instance.getVisitCount());
+  }
 
-//  /**
-//   * Test of getPosition method, of class Node.
-//   */
-//  @Test
-//  public void testGetPosition() {
-//    System.out.println("getPosition");
-//    Node instance = null;
-//    int expResult = 0;
-//    int result = instance.getPosition();
-//    assertEquals(expResult, result);
+  /**
+   * Test of getPosition method, of class Node.
+   */
+  @Test
+  public void testGetPosition() {
+    System.out.println("getPosition");
+    Node instance = new LeafNode(tree);
+    int result = instance.getPosition();
+    assertTrue(result >= 0);
+  }
+
+  /**
+   * Test of getVisitCount method, of class Node.
+   */
+  @Test
+  public void testGetVisitCount() {
+    System.out.println("getVisitCount");
+    Node instance = new LeafNode(tree);
+    int expResult = 0;
+    int result = instance.getVisitCount();
+    assertEquals(expResult, result);
+  }
+
+  /**
+   * Test of serialize method, of class Node.
+   */
+  @Test
+  public void testSerialize() {
+    System.out.println("serialize");
+    Node instance =  new LeafNode(tree);
+    boolean serialized = instance.serialize(tree);
+//    System.out.println(serialized);
+    assertTrue(!serialized);
+    // TODO review the generated test code and remove the default call to fail.
+//    fail("The test case is a prototype.");
+  }
+
+  /**
+   * Test of isFull method, of class Node.
+   */
+  @Test
+  public void testIsFull() {
+    System.out.println("isFull");
+    Node instance = new LeafNode(tree);
+    boolean expResult = false;
+    boolean result = instance.isFull();
+    assertEquals(expResult, result);
 //    // TODO review the generated test code and remove the default call to fail.
 //    fail("The test case is a prototype.");
-//  }
-//
-//  /**
-//   * Test of getVisitCount method, of class Node.
-//   */
-//  @Test
-//  public void testGetVisitCount() {
-//    System.out.println("getVisitCount");
-//    Node instance = null;
-//    int expResult = 0;
-//    int result = instance.getVisitCount();
-//    assertEquals(expResult, result);
+  }
+
+  /**
+   * Test of getEntityCount method, of class Node.
+   */
+  @Test
+  public void testGetEntityCount() {
+    System.out.println("getEntityCount");
+    Node instance = new LeafNode(tree);
+    int expResult = 0;
+    int result = instance.getEntityCount();
+    assertEquals(expResult, result);
 //    // TODO review the generated test code and remove the default call to fail.
 //    fail("The test case is a prototype.");
-//  }
-//
-//  /**
-//   * Test of serialize method, of class Node.
-//   */
-//  @Test
-//  public void testSerialize() {
-//    System.out.println("serialize");
-//    Tree tree = null;
-//    Node instance = null;
-//    instance.serialize(tree);
-//    // TODO review the generated test code and remove the default call to fail.
-//    fail("The test case is a prototype.");
-//  }
-//
-//  /**
-//   * Test of isFull method, of class Node.
-//   */
-//  @Test
-//  public void testIsFull() {
-//    System.out.println("isFull");
-//    Node instance = null;
-//    boolean expResult = false;
-//    boolean result = instance.isFull();
-//    assertEquals(expResult, result);
-//    // TODO review the generated test code and remove the default call to fail.
-//    fail("The test case is a prototype.");
-//  }
-//
-//  /**
-//   * Test of getEntityCount method, of class Node.
-//   */
-//  @Test
-//  public void testGetEntityCount() {
-//    System.out.println("getEntityCount");
-//    Node instance = null;
-//    int expResult = 0;
-//    int result = instance.getEntityCount();
-//    assertEquals(expResult, result);
-//    // TODO review the generated test code and remove the default call to fail.
-//    fail("The test case is a prototype.");
-//  }
-//
+  }
+
 //  /**
 //   * Test of sortEntities method, of class Node.
 //   */
@@ -147,50 +143,52 @@ public class NodeTest {
 //    // TODO review the generated test code and remove the default call to fail.
 //    fail("The test case is a prototype.");
 //  }
-//
-//  /**
-//   * Test of getEntities method, of class Node.
-//   */
-//  @Test
-//  public void testGetEntities() {
-//    System.out.println("getEntities");
-//    Node instance = null;
-//    NodeEntity[] expResult = null;
-//    NodeEntity[] result = instance.getEntities();
-//    assertArrayEquals(expResult, result);
+
+  /**
+   * Test of getEntities method, of class Node.
+   */
+  @Test
+  public void testGetEntities() {
+    System.out.println("getEntities");
+    Node instance = new LeafNode(tree);
+    NodeEntity[] expResult = new NodeEntity[ConstantsOfTree.DEGREE-1];
+    NodeEntity[] result = instance.getEntities();
+    assertEquals(expResult.length, result.length);
+//    TODO review the generated test code and remove the default call to fail.
+//    fail("The test case is a prototype.");
+  }
+
+  /**
+   * Test of addEntity method, of class Node.
+   */
+  @Test
+  public void testAddEntity() {
+    System.out.println("addEntity");
+    NodeEntity entity = new LeafNodeEntity(1L, tree);
+    Node instance = new LeafNode(tree);
+    boolean expResult = true;
+    boolean result = instance.addEntity(entity);
+    assertEquals(expResult, result);
 //    // TODO review the generated test code and remove the default call to fail.
 //    fail("The test case is a prototype.");
-//  }
-//
-//  /**
-//   * Test of addEntity method, of class Node.
-//   */
-//  @Test
-//  public void testAddEntity() {
-//    System.out.println("addEntity");
-//    NodeEntity entity = null;
-//    Node instance = null;
-//    boolean expResult = false;
-//    boolean result = instance.addEntity(entity);
-//    assertEquals(expResult, result);
+  }
+
+  /**
+   * Test of removeEntity method, of class Node.
+   */
+  @Test
+  public void testRemoveEntity() {
+    System.out.println("removeEntity");
+    int index = 0;
+    NodeEntity element = new NodeEntity(1L, tree);
+    Node instance = new LeafNode(tree);
+    instance.addEntity(element);
+    NodeEntity expResult = element;
+    NodeEntity result = instance.removeEntity(index);
+    assertEquals(expResult, result);
 //    // TODO review the generated test code and remove the default call to fail.
 //    fail("The test case is a prototype.");
-//  }
-//
-//  /**
-//   * Test of removeEntity method, of class Node.
-//   */
-//  @Test
-//  public void testRemoveEntity() {
-//    System.out.println("removeEntity");
-//    int index = 0;
-//    Node instance = null;
-//    NodeEntity expResult = null;
-//    NodeEntity result = instance.removeEntity(index);
-//    assertEquals(expResult, result);
-//    // TODO review the generated test code and remove the default call to fail.
-//    fail("The test case is a prototype.");
-//  }
+  }
 //
 //  /**
 //   * Test of clearEntities method, of class Node.
@@ -459,5 +457,4 @@ public class NodeTest {
 //    public void insert(Long key, Object dataObject) {
 //    }
 //  }
-  
 }

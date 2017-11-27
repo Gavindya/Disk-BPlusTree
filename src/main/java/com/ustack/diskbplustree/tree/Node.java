@@ -98,9 +98,10 @@ public abstract class Node implements Serializable {
   /**
    *
    * @param tree tree.
+   * @return isNodeSerialized
    */
-  public void serialize(Tree tree) {
-    NodeSerializer.serializeNode(this, tree);
+  public boolean serialize(Tree tree) {
+    return NodeSerializer.serializeNode(this, tree);
   }
 
   /**

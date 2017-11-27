@@ -78,21 +78,21 @@ public class MmapHandler {
     getFile(fileIndex).putInt(offset, value);
   }
 
-  public void serializeNode(Node node, Tree tree) {
+  public boolean serializeNode(Node node, Tree tree) {
     if (node instanceof LeafNode) {
-      serializeLeafNode(node, tree);
+      return serializeLeafNode(node, tree);
     } else {
-      serializeInternalNode(node, tree);
+      return serializeInternalNode(node, tree);
     }
 
   }
 
-  private void serializeLeafNode(Node node, Tree tree) {
+  private boolean serializeLeafNode(Node node, Tree tree) {
     int leafNodeType = 1;
     int pos = node.getPosition();
 
     if (node.getEntityCount() == 0) {
-      return;
+      return false;
     }
     for (int i = 0; i < node.getEntityCount(); i++) {
       if (node.getEntities()[i] != null) {
@@ -105,14 +105,14 @@ public class MmapHandler {
     putInt(pos + tree.getNextNodeOffset(), ((LeafNode) node).getNextLeafNodeOffset());
     putInt(pos + tree.getParentOffset(), node.getParent());
     putInt(pos + tree.getPositionOffset(), node.getPosition());
-
+    return true;
   }
 
-  private void serializeInternalNode(Node node, Tree tree) {
+  private boolean serializeInternalNode(Node node, Tree tree) {
     int internalNodeType = 0;
     int pos = node.getPosition();
     if (node.getEntityCount() == 0) {
-      return;
+      return false;
     }
     for (int i = 0; i < node.getEntityCount(); i++) {
       if (node.getEntities()[i] != null) {
@@ -124,6 +124,7 @@ public class MmapHandler {
     putInt(pos + tree.getNodeTypeOffset(), internalNodeType);
     putInt(pos + tree.getParentOffset(), node.getParent());
     putInt(pos + tree.getPositionOffset(), node.getPosition());
+    return true;
   }
 
   public Node deSerializeNode(int pos, Tree tree) {

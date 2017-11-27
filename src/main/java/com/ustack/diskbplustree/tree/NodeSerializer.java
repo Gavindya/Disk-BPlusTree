@@ -28,11 +28,13 @@ public class NodeSerializer {
    *
    * @param node node.
    * @param tree tree
+   * @return isNodeSerialized
    */
-  public static void serializeNode(Node node, Tree tree) {
+  public static boolean serializeNode(Node node, Tree tree) {
     if (node.isDirty) {
-      MMAP_HANDLER.serializeNode(node, tree);
+      return MMAP_HANDLER.serializeNode(node, tree);
     }
+    return false;
   }
 
   /**

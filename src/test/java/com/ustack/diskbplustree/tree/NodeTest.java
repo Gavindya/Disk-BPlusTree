@@ -99,7 +99,7 @@ public class NodeTest {
     Node instance =  new LeafNode(tree);
     boolean serialized = instance.serialize(tree);
 //    System.out.println(serialized);
-    assertTrue(!serialized);
+    assertFalse(serialized);
     // TODO review the generated test code and remove the default call to fail.
 //    fail("The test case is a prototype.");
   }

@@ -31,6 +31,7 @@ public class Main {
 
   public static void main(String[] args) {
 
+    System.out.println("MAIN");
     Tree tree = new Tree(1024 * 4);
 //        tree.insert(1, 1l);
     tree.insert(1l, 1l);

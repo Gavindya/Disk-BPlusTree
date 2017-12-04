@@ -16,3 +16,4 @@ install: "mvn clean jacoco:prepare-agent install jacoco:report"
   
 after_success:
   - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r ./target/site/jacoco/jacoco.xml
+  - bash <(curl -s https://codecov.io/bash) -t 244c6292-f449-46ed-8826-e069ab8e94c4
